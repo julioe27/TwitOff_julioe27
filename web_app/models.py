@@ -12,14 +12,14 @@ class Book(db.Model):
 
 class User(db.Model):
     id = db.Column(db.BigInteger, primary_key=True)
-    screen_name = db.Column(db.String(128),nullable)
+    screen_name = db.Column(db.String(128), nullable=False)
     name = db.Column(db.String)
     location = db.Column(db.String)
     follower_count = db.Column(db.Integer)
 
 class Tweet(db.Model):
     id = db.Column(db.BigInteger, primary_key=True)
-    user_id = db.Column(db.BigInteger, db.FoeignKey("user.id"))
+    user_id = db.Column(db.BigInteger, db.ForeignKey("user.id"))
     full_text = db.Column(db.String(500))
     embedding = db.Column(db.PickleType)
 

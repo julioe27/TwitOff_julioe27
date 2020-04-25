@@ -9,7 +9,7 @@ BASILICA_API_KEY = os.getenv("BASILICA_API_KEY")
 connection = basilica.Connection(BASILICA_API_KEY)
 print(type(connection))
 
-if __name__ = "__main__":
+if __name__ == "__main__":
 
     embedding = connection.embed_sentence("hey this is a cool tweet", model="twitter")
     print(embedding)
