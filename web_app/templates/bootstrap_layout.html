@@ -1,3 +1,4 @@
+<!doctype html>
 <html>
   <head>
     {% block title %}
@@ -27,6 +28,7 @@
     <!-- see: https://jinja.palletsprojects.com/en/2.11.x/tricks/ -->
     <!-- see: https://getbootstrap.com/docs/4.0/components/navbar/ -->
     {% set nav_links = [
+      ('/', 'prediction_form', 'Make a Prediction'),
       ('/books', 'books', 'Books'),
       ('/books/new', 'new_book', 'New Book')
     ] -%}
@@ -63,7 +65,7 @@
       <!-- FOOTER -->
       <div id="footer">
         <hr>
-        &copy; Copyright 2019 JE |
+        &copy; Copyright 2019 Prof. MJ Rossetti |
         <a href="https://github.com/prof-rossetti/">source</a>
       </div>
     </div>

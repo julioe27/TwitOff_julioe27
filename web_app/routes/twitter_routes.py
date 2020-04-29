@@ -9,32 +9,51 @@ from web_app.services.basilica_service import connection as basilica_connection
 twitter_routes = Blueprint("twitter_routes", __name__)
 
 @twitter_routes.route("/users/<screen_name>/fetch")
-def fetch_user_data():
-    print("FETCHING...", screen_nmae)
+def fetch_user_data(screen_name):
+    print("FETCHING...", screen_name)
 
+    #
+    # fetch user info
+    #
     user = twitter_api.get_user(screen_name)
 
-    db_user = User.query.get(user.id) or User(id.user.id)
+    #
+    # store user info in database
+    #
+
+    db_user = User.query.get(user.id) or User(id=user.id)
     db_user.screen_name = user.screen_name
     db_user.name = user.name
     db_user.location = user.location
-    db_user.follower_count = user.followers_count
+    db_user.followers_count = user.followers_count
     db.session.add(db_user)
     db.session.commit()
 
-    statues = twitter_api.user_timeline(screen_name, tweet_mode="extended",count=150)
-    print("STATUES", len(statues))
+    #
+    # fetch their tweets
+    #
 
-    tweet_texts = [status.full_text for status in statues]
-    embeddings = list(basilica_connection.embed_sentences(tweet_texts, model='twitter'))
+    statuses = twitter_api.user_timeline(screen_name, tweet_mode="extended", count=150)
+    print("STATUSES", len(statuses))
+
+    #
+    # fetch embedding for each tweet
+    #
+
+    tweet_texts = [status.full_text for status in statuses]
+    embeddings = list(basilica_connection.embed_sentences(tweet_texts, model="twitter"))
     print("EMBEDDINGS", len(embeddings))
 
-    for index, status in enumerate(statues):
+    #
+    # store tweets in database (w/ embeddings)
+    #
+
+    for index, status in enumerate(statuses):
         print(status.full_text)
-        print("-------")
-        db_tweet = Tweet.query.get(status.id) or Tweet(id=staus.id)
+        print("----")
+        db_tweet = Tweet.query.get(status.id) or Tweet(id=status.id)
         db_tweet.user_id = status.author.id
-        db_tweet.user_id = status.full_text
+        db_tweet.full_text = status.full_text
         embedding = embeddings[index]
         print(len(embedding))
         db_tweet.embedding = embedding
@@ -42,6 +61,5 @@ def fetch_user_data():
 
     db.session.commit()
 
-    return f" FETCHED {screen_name} OK"
-
-
+    return f"FETCHED {screen_name} OK"
+    #return jsonify({"user": user._json, "num_tweets": len(statuses)})

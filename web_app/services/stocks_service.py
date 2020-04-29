@@ -23,4 +23,3 @@ print(type(parsed_response))  # > <class 'dict'>
 latest_close = parsed_response["Time Series (Daily)"]["2020-02-25"]["4. close"]
 print("LATEST CLOSING PRICE:", latest_close)
 
-# breakpoint()

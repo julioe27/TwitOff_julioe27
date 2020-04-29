@@ -2,17 +2,21 @@
 
 ## Setup a database
 
-'''
-FLASK_APP=web_app flask db init
-FLASK_APP=web_app flask db migrate
-FLASK_APP=web_app flask db upgrade
-'''
+``````
+set FLASK_APP=web_app
+flask db init # only need to do it once
+flask db migrate
+flask db upgrade
+``````
 
 ## Usage
 
-'''# Mac:
+`````# Mac:
 FLASK_APP=hello.py flask run
-
+`````
 # Windows:
-export FLASK_APP=hello.py # one-time thing, to set the env var
-flask run'''
+
+``````
+set FLASK_APP=hello.py # one-time thing, to set the env var
+flask run
+``````
