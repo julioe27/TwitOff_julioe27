@@ -24,12 +24,11 @@ if __name__ == "__main__":
     print(type(user))
     print(user.screen_name)
     print(user.id)
-    print(user.statues_count)
+    print(user.statuses_count)
 
     print("------------")
     print("STATUSES")
-
-    statues = api.user_timeline("elonmush", tweet_mode="extended", count=35, exclude_replies=True, include_rts=False)
+    statues = api.user_timeline("elonmusk", tweet_mode="extended", count=35, exclude_replies=True, include_rts=False)
     for status in statues:
         print("----")
         print(status.full_text)

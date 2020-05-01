@@ -12,8 +12,7 @@ from web_app.routes.stats_routes import stats_routes
 
 load_dotenv()
 
-DATABASE_URI = "sqlite:///C:\\Users\\julio\\Desktop\\Lambda\\TwitOff_julioe27\\twitoff_development.db"
-
+DATABASE_URI = os.getenv("DATABASE_URL")
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 def create_app():
